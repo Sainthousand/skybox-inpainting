@@ -25,7 +25,7 @@ def generate_image_sequencce(init_image_list, mask_image_list, root_path):
 
     for idx, (init_image, mask_image) in tqdm(enumerate(zip(init_image_list, mask_image_list))):
         idx_str = str(idx + 1).zfill(6)
-        mask_blurred = pipeline.mask_processor.blur(mask_image, blur_factor=5)
+        mask_blurred = pipeline.mask_processor.blur(mask_image, blur_factor=10)
         image = pipeline(prompt=prompt,
                         negative_prompt=negative_prompt,
                         image=init_image, 
@@ -42,8 +42,8 @@ def generate_image_sequencce(init_image_list, mask_image_list, root_path):
         cropped_img = image.crop(area)
         resized_img = cropped_img.resize((4096, 2048), Image.BILINEAR)
 
-    resized_img.save(os.path.join(root_path, "output", f'{idx_str}.jpg'))
-    result.save(os.path.join(root_path, 'result', f'{idx_str}.jpg'))
+        resized_img.save(os.path.join(root_path, "output", f'{idx_str}.jpg'))
+        result.save(os.path.join(root_path, 'result', f'{idx_str}.jpg'))
 
 
 def generate_image(init_image, mask_image, root_path, idx_str):
@@ -58,7 +58,7 @@ def generate_image(init_image, mask_image, root_path, idx_str):
     
     prompt = "A high-definition image of real sky, with some clouds"
     negative_prompt = "boat, Artifact, tower, error, sketch, horror, geometry, stone, cartoon, word, slogan, ground, tree, blurred, ceiling, branches, pixelated, Disfigured, cartoon, nude, building, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry,"
-    mask_blurred = pipeline.mask_processor.blur(mask_image, blur_factor=5)
+    mask_blurred = pipeline.mask_processor.blur(mask_image, blur_factor=1)
 
     image = pipeline(prompt=prompt,
                     negative_prompt=negative_prompt,
